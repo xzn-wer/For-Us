@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web about us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffe6f0, #f5f5dc);
+            color: #5a4a42;
+            overflow-x: hidden;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        section {
+            min-height: 100vh;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        h1, h2 {
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .slide-up {
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 1s ease-out forwards;
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 24px;
+            animation: float 6s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        /* Home */
+        #home {
+            background: url('https://source.unsplash.com/featured/?couple,romantic') no-repeat center center/cover;
+            position: relative;
+            color: white;
+        }
+        #home .overlay {
+            background: rgba(0,0,0,0.3);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #home .content {
+            position: relative;
+            z-index: 1;
+        }
+        #home img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid #ffe6f0;
+        }
+        #home button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #home button:hover {
+            background: #ff1493;
+        }
+        /* Gallery */
+        #gallery {
+            background: #f5f5dc;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .photo {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .photo img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .photo:hover {
+            transform: scale(1.05);
+        }
+        .photo .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.8);
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .photo:hover .caption {
+            opacity: 1;
+        }
+        /* Letter */
+        #letter {
+            background: #ffe6f0;
+        }
+        .letter-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+        }
+        .letter-box::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #fff;
+        }
+        .typing {
+            font-size: 20px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            text-align: left;
+        }
+        .small-heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            animation: moveHeart 4s linear infinite;
+        }
+        @keyframes moveHeart {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(100px); }
+            100% { transform: translateX(0); }
+        }
+        /* Playlist */
+        #playlist {
+            background: #f5f5dc;
+        }
+        .playlist-embed {
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .song-list {
+            list-style: none;
+            padding: 0;
+        }
+        .song-list li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .music-icon {
+            position: absolute;
+            font-size: 30px;
+            color: #ff69b4;
+            animation: floatMusic 5s ease-in-out infinite;
+        }
+        @keyframes floatMusic {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        /* Easter Egg */
+        .easter-egg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 10;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        .popup button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        /* Closing */
+        #closing {
+            background: #ffe6f0;
+        }
+        #closing button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #closing button:hover {
+            background: #ff1493;
+        }
+        .rain-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 30px 10px;
+            }
+            #home img {
+                width: 200px;
+                height: 200px;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            .letter-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="hearts"></div>
+
+    <section id="home">
+        <div class="overlay"></div>
+        <div class="content fade-in">
+            <img src="us.jpeg" alt="Foto Couple">
+            <h1>Kenangan Kita</h1>
+            <p>"Dalam setiap detik, aku menemukan cinta yang tak pernah pudar."</p>
+            <button onclick="scrollToSection('gallery')">Mulai Kenangan</button>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="slide-up">Galeri Kenangan</h2>
+        <div class="gallery-grid">
+            <div class="photo">
+                <img src="https://source.unsplash.com/featured/?romantic,moment" alt="Kenangan 1">
+                <div class="caption">Momen pertama kita bertemu.</div>
+            </div>
+            <div class="photo">
+                <img src="https://source.unsplash.com/featured/?couple,beach" alt="Kenangan 2">
+                <div class="caption">Pantai yang penuh tawa.</div>
+            </div>
+            <div class="photo">
+                <img src="https://source.unsplash.com/featured/?love,park" alt="Kenangan 3">
+                <div class="caption">Jalan-jalan di taman.</div>
+            </div>
+            <div class="photo">
+                <img src="https://source.unsplash.com/featured/?romantic,dinner" alt="Kenangan 4">
+                <div class="caption">Makan malam spesial.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="letter">
+        <h2 class="slide-up">Surat Cinta</h2>
+        <div class="letter-box">
+            <div class="typing" id="typing-text"></div>
+            <div class="small-heart">❤️</div>
+        </div>
+    </section>
+
+    <section id="playlist">
+        <h2 class="slide-up">Our songs</h2>
+        <p>Lagu Yang Mengingatkanku Pada Mu</p>
+        <div class="playlist-embed">
+    <iframe style="border-radius:12px; width: 100%; height: 152px;"
+        src="https://open.spotify.com/embed/track/1Q7EgiMOuwDcB0PJC6AzON"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media;"
+        loading="lazy">
+    </iframe>
+        </div>
+<!--
+        <ul class="song-list">
+            <li><strong>Lagu 1:</strong> Mengingatkan pada momen pertama kita.</li>
+            <li><strong>Lagu 2:</strong> Lagu favorit kita saat jalan-jalan.</li>
+            <li><strong>Lagu 3:</strong> Yang selalu membuat kita tertawa.</li>
+        </ul>
+        <div class="music-icon">🎵</div>
+    </section>
+-->
+    <section id="closing">
+        <h2 class="slide-up">Terima Kasih</h2>
+        <p>Terima kasih telah menjadi bagian dari hidupku. Semoga hubungan kita semakin kuat dan penuh cinta di masa depan.</p>
+        <button onclick="rainHearts()">I Love You ❤️</button>
+        <div class="rain-hearts" id="rain-hearts"></div>
+    </section>
+
+    <button class="easter-egg" onclick="showPopup()">Jangan Klik Aku</button>
+    <div class="popup" id="popup">
+        <p>Kok nakal sih? Tapi aku sayang kamu ❤️</p>
+        <button onclick="hidePopup()">Tutup</button>
+    </div>
+
+    <script>
+        // Floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 6 + 's';
+            document.getElementById('hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 1000);
+
+        // Scroll to section
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Typing effect
+        const text = "Sayangku,\n\nSetiap hari bersamamu adalah petualangan yang tak pernah aku bayangkan. Dari senyumanmu yang selalu membuat hatiku berdegup kencang, hingga cara kamu tertawa yang membuat dunia terasa lebih indah. Aku ingin mengatakan bahwa kamu adalah segalanya bagiku.\n\nIngat saat kita pertama kali bertemu? Itu seperti takdir yang tak bisa dihindari. Dan sekarang, setelah semua ini, aku yakin bahwa kita diciptakan untuk saling melengkapi. Kamu adalah cahaya di hari gelapku, dan aku berjanji akan selalu ada untukmu.\n\nTerima kasih telah menjadi bagian dari hidupku. Aku mencintaimu lebih dari yang kata-kata bisa ungkapkan.\n\nSelamanya milikmu,\nNazwar";
+        let index = 0;
+        const TYPING_DELAY = 25; // lebih cepat dari sebelumnya
+        function typeWriter() {
+            if (index < text.length) {
+                const char = text.charAt(index);
+                if (char === '\n') {
+                    document.getElementById('typing-text').innerHTML += '<br>';
+                } else {
+                    document.getElementById('typing-text').innerHTML += char;
+                }
+                index++;
+                setTimeout(typeWriter, TYPING_DELAY);
+            }
+        }
+        window.onload = typeWriter;
+
+        // Easter Egg
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Rain hearts
+        function rainHearts() {
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.getElementById('rain-hearts').appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
